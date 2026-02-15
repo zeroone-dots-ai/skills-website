@@ -1,0 +1,206 @@
+import type { Skill, GSDCommand } from '../types/skill'
+
+export const skills: Skill[] = [
+  // ─── Personal Skills ────────────────────────────────────────
+  {
+    id: 'start-project-meet',
+    name: 'StartProjectMeet',
+    command: '/StartProjectMeet',
+    description: 'One-click production-ready project scaffolding with your full architecture baked in.',
+    longDescription: 'Type a vague idea, get a fully architected project. CLAUDE.md, docs, Docker, scripts, Git — everything scaffolded with your personal tech stack defaults. React 19, TypeScript, Tailwind 4, Express 5, FastAPI, PostgreSQL 17, Redis — all wired up automatically. Never configure from scratch again.',
+    category: 'personal',
+    pillar: 'tech',
+    installCommand: 'curl -o ~/.claude/commands/StartProjectMeet.md https://raw.githubusercontent.com/zeroone-dots-ai/StartProjectMeet/main/StartProjectMeet.md',
+    usageExamples: [
+      '/StartProjectMeet build me a job board with AI matching',
+      '/StartProjectMeet SaaS dashboard for tracking crypto portfolio',
+      '/StartProjectMeet REST API for managing restaurant reservations',
+    ],
+    source: 'github',
+    githubUrl: 'https://github.com/zeroone-dots-ai/StartProjectMeet',
+    videoSlug: 'skills-startprojectmeet',
+    tags: ['scaffold', 'project', 'architecture', 'docker', 'production'],
+    isNew: true,
+  },
+  {
+    id: 'meet-documents',
+    name: 'MeetDocuments',
+    command: '/MeetDocuments',
+    description: 'Next-gen documentation engine with 10 templates, web research, and the 10-year-old test.',
+    longDescription: 'Document anything so clearly a 10-year-old could repeat the task. Auto-detects 10 document types (HOW_TO, CONCEPT, TROUBLESHOOT, COMPARE, CHEATSHEET, ARCHITECTURE, LEARNING, POSTMORTEM, PROJECT, REFERENCE), runs web research, generates Mermaid diagrams, and places docs in the right section. Feeds into the ZeroOne AI Learning Academy.',
+    category: 'personal',
+    pillar: 'data',
+    installCommand: 'curl -o ~/.claude/commands/MeetDocuments.md https://raw.githubusercontent.com/zeroone-dots-ai/MeetDocuments/main/MeetDocuments.md',
+    usageExamples: [
+      '/MeetDocuments how to deploy a Docker container on Hostinger VPS',
+      '/MeetDocuments compare Redis vs Memcached for session storage',
+      '/MeetDocuments troubleshoot nginx 502 bad gateway errors',
+    ],
+    source: 'github',
+    githubUrl: 'https://github.com/zeroone-dots-ai/MeetDocuments',
+    videoSlug: 'skills-meetdocuments',
+    tags: ['documentation', 'learning', 'research', 'academy', 'templates'],
+    isNew: true,
+  },
+  {
+    id: 'capture-knowledge',
+    name: 'CaptureKnowledge',
+    command: '/CaptureKnowledge',
+    description: 'Token-efficient knowledge capture. 4 tool calls. ~950 tokens. Zero bloat.',
+    longDescription: 'Extracts what you learned, decided, or fixed and appends it to knowledge.md. No web research, no template classification, no diagrams — just raw knowledge logged fast. 5x leaner than MeetDocuments. Auto-captures from git history when called with no arguments.',
+    category: 'personal',
+    pillar: 'data',
+    installCommand: 'curl -o ~/.claude/commands/CaptureKnowledge.md https://raw.githubusercontent.com/zeroone-dots-ai/CaptureKnowledge/main/CaptureKnowledge.md',
+    usageExamples: [
+      '/CaptureKnowledge fixed N+1 query using DataLoader — 40% faster',
+      '/CaptureKnowledge chose Docker Compose over K8s — only 3 services',
+      '/CaptureKnowledge',
+      '/CaptureKnowledge decisions',
+    ],
+    source: 'github',
+    githubUrl: 'https://github.com/zeroone-dots-ai/CaptureKnowledge',
+    videoSlug: 'skills-captureknowledge',
+    tags: ['knowledge', 'capture', 'lean', 'token-efficient', 'log'],
+    isNew: true,
+  },
+  {
+    id: 'higgsfield-prompt',
+    name: 'Higgsfield Prompt Writer',
+    command: '/higgsfield-prompt',
+    description: 'Generate complete Higgsfield AI video prompts with camera angles, lipsync, and voiceover.',
+    longDescription: 'Creates ready-to-paste prompts for Higgsfield AI Director Panel. Includes camera angle specifications, lipsync timing markers, voiceover scripts, and scene composition — all formatted for instant use in Higgsfield video generation.',
+    category: 'personal',
+    pillar: 'tech',
+    usageExamples: [
+      '/higgsfield-prompt product reveal for a SaaS dashboard launch',
+      '/higgsfield-prompt testimonial video with founder speaking to camera',
+    ],
+    source: 'built-in',
+    tags: ['video', 'ai', 'prompts', 'higgsfield', 'content'],
+  },
+
+  // ─── GSD System ──────────────────────────────────────────────
+  {
+    id: 'gsd-system',
+    name: 'Get Shit Done (GSD)',
+    command: '/gsd:help',
+    description: '28 commands for planning, executing, and shipping projects with zero chaos.',
+    longDescription: 'A complete project management system built into Claude Code. Initialize projects with deep context gathering, plan phases with research and verification, execute with wave-based parallelization, track milestones, debug systematically, and audit completion — all from the terminal. Includes persistent state across context resets, auto-research before planning, and goal-backward verification.',
+    category: 'gsd',
+    pillar: 'operations',
+    installCommand: 'See GSD installation guide at gsd.dotsai.cloud',
+    usageExamples: [
+      '/gsd:new-project',
+      '/gsd:plan-phase',
+      '/gsd:execute-phase',
+      '/gsd:progress',
+    ],
+    source: 'built-in',
+    videoSlug: 'skills-gsd-system',
+    tags: ['project-management', 'planning', 'execution', 'milestones', 'debugging'],
+  },
+
+  // ─── Project Skills ──────────────────────────────────────────
+  {
+    id: 'render-video',
+    name: 'Remotion Video Renderer',
+    command: '/render-video',
+    description: 'Generate and render ZeroOne brand campaign videos with 8 composition types.',
+    longDescription: 'Renders professional videos using Remotion with ZeroOne D.O.T.S. AI brand identity. Supports BrandIntro, BrandOutro, TextReel, DotsRevealReel, PillarShowcase, TestimonialReel, QuoteVideo, and LinkedInPost compositions. Full theme system with 4 content pillars, batch campaign rendering, and multiple codec support.',
+    category: 'project',
+    pillar: 'tech',
+    usageExamples: [
+      '/render-video TextReel about AI automation benefits',
+      '/render-video BrandIntro for product launch campaign',
+      '/render-video campaign skills-showcase',
+    ],
+    source: 'built-in',
+    tags: ['video', 'remotion', 'brand', 'campaign', 'rendering'],
+  },
+
+  // ─── Community Skills ────────────────────────────────────────
+  {
+    id: 'last30days',
+    name: 'Last 30 Days Research',
+    command: '/last30days',
+    description: 'Research trending topics from the last 30 days across Reddit, X, YouTube, and web.',
+    longDescription: 'Scans Reddit, X (Twitter), YouTube, and the web for recent discussions about any topic. Aggregates community feedback with engagement signals, generates copy-paste-ready prompts for ChatGPT, Claude, Midjourney, or other AI tools. Supports watchlists for recurring monitoring and YouTube transcript extraction.',
+    category: 'community',
+    pillar: 'strategy',
+    installCommand: 'git clone https://github.com/mvanhorn/last30days-skill.git ~/.claude/skills/last30days',
+    usageExamples: [
+      '/last30days trending AI agent frameworks',
+      '/last30days best practices for RAG pipelines for Claude',
+      '/last30days React 19 new features and community reactions',
+    ],
+    source: 'github',
+    githubUrl: 'https://github.com/mvanhorn/last30days-skill',
+    videoSlug: 'skills-last30days',
+    tags: ['research', 'trends', 'reddit', 'twitter', 'youtube', 'community'],
+    isNew: true,
+  },
+
+  // ─── Design Skills ───────────────────────────────────────────
+  {
+    id: 'ui-ux-pro-max',
+    name: 'UI/UX Pro Max',
+    command: '/ui-ux-pro-max',
+    description: '50 styles, 21 palettes, 50 font pairings, 20 charts — design intelligence for any stack.',
+    longDescription: 'Complete UI/UX design intelligence system. 50 design styles (glassmorphism, neumorphism, brutalism, bento grid, and more), 21 curated color palettes, 50 font pairings, 20 chart types. Supports React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, and shadcn/ui. Plans, builds, reviews, and optimizes UI/UX code.',
+    category: 'design',
+    pillar: 'strategy',
+    usageExamples: [
+      '/ui-ux-pro-max design a glassmorphic dashboard',
+      '/ui-ux-pro-max review my landing page for accessibility',
+      '/ui-ux-pro-max create a bento grid layout for feature showcase',
+    ],
+    source: 'built-in',
+    videoSlug: 'skills-uiuxpromax',
+    tags: ['design', 'ui', 'ux', 'styles', 'accessibility', 'components'],
+  },
+]
+
+export const gsdCommands: GSDCommand[] = [
+  // Init & Lifecycle
+  { command: '/gsd:new-project', description: 'Initialize new project with deep context gathering', group: 'init' },
+  { command: '/gsd:new-milestone', description: 'Start new milestone cycle with requirements', group: 'init' },
+  { command: '/gsd:complete-milestone', description: 'Archive completed milestone', group: 'init' },
+  { command: '/gsd:audit-milestone', description: 'Audit milestone completion against original intent', group: 'init' },
+  // Planning
+  { command: '/gsd:plan-phase', description: 'Create detailed execution plan with verification', group: 'plan' },
+  { command: '/gsd:discuss-phase', description: 'Gather phase context through questioning', group: 'plan' },
+  { command: '/gsd:research-phase', description: 'Research how to implement a phase', group: 'plan' },
+  { command: '/gsd:list-phase-assumptions', description: 'Surface assumptions before planning', group: 'plan' },
+  { command: '/gsd:plan-milestone-gaps', description: 'Create phases to close gaps', group: 'plan' },
+  // Execution
+  { command: '/gsd:execute-phase', description: 'Execute plans with wave-based parallelization', group: 'execute' },
+  { command: '/gsd:quick', description: 'Execute small tasks with GSD guarantees', group: 'execute' },
+  { command: '/gsd:verify-work', description: 'Validate features through conversational UAT', group: 'execute' },
+  { command: '/gsd:debug', description: 'Systematic debugging with persistent state', group: 'execute' },
+  // Phase Management
+  { command: '/gsd:add-phase', description: 'Add phase to end of milestone', group: 'manage' },
+  { command: '/gsd:insert-phase', description: 'Insert urgent work between phases', group: 'manage' },
+  { command: '/gsd:remove-phase', description: 'Remove a future phase', group: 'manage' },
+  { command: '/gsd:add-todo', description: 'Capture idea or task as todo', group: 'manage' },
+  { command: '/gsd:check-todos', description: 'List pending todos', group: 'manage' },
+  // Progress & Context
+  { command: '/gsd:progress', description: 'Check project progress and route to next action', group: 'manage' },
+  { command: '/gsd:pause-work', description: 'Create context handoff when pausing', group: 'manage' },
+  { command: '/gsd:resume-work', description: 'Resume with full context restoration', group: 'manage' },
+  { command: '/gsd:map-codebase', description: 'Analyze codebase with parallel agents', group: 'manage' },
+  // System
+  { command: '/gsd:help', description: 'Show available commands and usage', group: 'system' },
+  { command: '/gsd:settings', description: 'Configure workflow toggles', group: 'system' },
+  { command: '/gsd:set-profile', description: 'Switch model profile', group: 'system' },
+  { command: '/gsd:update', description: 'Update GSD to latest version', group: 'system' },
+  { command: '/gsd:reapply-patches', description: 'Reapply local modifications after update', group: 'system' },
+  { command: '/gsd:join-discord', description: 'Join the GSD Discord community', group: 'system' },
+]
+
+export const GSD_GROUP_LABELS: Record<GSDCommand['group'], string> = {
+  init: 'Lifecycle',
+  plan: 'Planning',
+  execute: 'Execution',
+  manage: 'Management',
+  system: 'System',
+}

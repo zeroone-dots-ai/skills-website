@@ -1,0 +1,7 @@
+services:
+  skills-website:
+    build: .
+    container_name: skills-website
+    restart: unless-stopped
+    ports:
+      - "3456:80"
