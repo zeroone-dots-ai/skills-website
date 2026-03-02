@@ -14,3 +14,10 @@ export const SITE = {
   brand: 'ZeroOne D.O.T.S. AI',
   brandUrl: 'https://zeroonedotsai.consulting',
 }
+
+export const BRAND = {
+  name: 'ZeroOne D.O.T.S. AI',
+  tagline: 'We will build Your AI \u2014 Own IT',
+  consultingUrl: 'https://zeroonedotsai.consulting',
+  githubOrg: 'https://github.com/zeroone-dots-ai',
+}

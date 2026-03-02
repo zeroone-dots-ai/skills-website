@@ -1,4 +1,4 @@
-export type SkillCategory = 'personal' | 'gsd' | 'project' | 'community' | 'design'
+export type SkillCategory = 'personal' | 'gsd' | 'project' | 'community' | 'design' | 'mcp'
 
 export type PillarKey = 'data' | 'operations' | 'tech' | 'strategy'
 
@@ -17,6 +17,8 @@ export interface Skill {
   videoSlug?: string
   tags: string[]
   isNew?: boolean
+  /** For MCP skills: list of available tool names */
+  mcpTools?: string[]
 }
 
 export interface GSDCommand {
@@ -38,4 +40,5 @@ export const CATEGORY_LABELS: Record<SkillCategory, string> = {
   project: 'Project',
   community: 'Community',
   design: 'Design',
+  mcp: 'MCP Server',
 }

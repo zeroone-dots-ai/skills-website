@@ -14,6 +14,7 @@ const FILTERS: { key: FilterKey; label: string; color: string }[] = [
   { key: 'project', label: 'Project', color: PILLAR_COLORS.tech },
   { key: 'community', label: 'Community', color: PILLAR_COLORS.data },
   { key: 'design', label: 'Design', color: PILLAR_COLORS.strategy },
+  { key: 'mcp', label: 'MCP Servers', color: PILLAR_COLORS.operations },
 ]
 
 export function Skills() {

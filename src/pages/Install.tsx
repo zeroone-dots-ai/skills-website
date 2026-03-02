@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
-import { Terminal, Download, FolderOpen, Zap } from 'lucide-react'
+import { Terminal, Download, FolderOpen, Zap, ArrowRight } from 'lucide-react'
 import { CopyButton } from '../components/CopyButton'
 import { PILLAR_COLORS } from '../types/skill'
+import { ZeroOneLogo } from '../components/ZeroOneLogo'
+import { BRAND } from '../utils/constants'
 
 const INSTALL_STEPS = [
   {
@@ -98,7 +100,7 @@ curl -o ~/.claude/commands/CaptureKnowledge.md https://raw.githubusercontent.com
       </motion.section>
 
       {/* Step by Step */}
-      <div className="space-y-8 pb-16">
+      <div className="space-y-8 pb-8">
         {INSTALL_STEPS.map(({ icon: Icon, title, pillar, items }, sectionIdx) => {
           const color = PILLAR_COLORS[pillar]
           return (
@@ -139,6 +141,35 @@ curl -o ~/.claude/commands/CaptureKnowledge.md https://raw.githubusercontent.com
           )
         })}
       </div>
+
+      {/* Post-install Consulting CTA */}
+      <motion.section
+        className="pb-16"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="rounded-2xl bg-gradient-to-br from-ink to-[#2a1f3d] border border-white/[0.08] p-8 sm:p-10 text-center">
+          <div className="flex justify-center mb-4">
+            <ZeroOneLogo size={40} />
+          </div>
+          <h3 className="font-display text-xl text-neutral-100 mb-2">
+            All installed? Ready for the next level.
+          </h3>
+          <p className="text-sm text-neutral-100/40 leading-relaxed max-w-lg mx-auto mb-6">
+            ZeroOne consulting helps teams ship AI products 10x faster with guaranteed outcomes. From custom skills to full AI transformation.
+          </p>
+          <a
+            href={BRAND.consultingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-medium bg-pillar-data/15 text-pillar-data border border-pillar-data/20 hover:bg-pillar-data/25 transition-all cursor-pointer"
+          >
+            Talk to ZeroOne
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </motion.section>
     </div>
   )
 }

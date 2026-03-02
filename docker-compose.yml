@@ -5,3 +5,9 @@ services:
     restart: unless-stopped
     ports:
       - "3456:80"
+    networks:
+      - services_services
+
+networks:
+  services_services:
+    external: true

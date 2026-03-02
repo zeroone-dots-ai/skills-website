@@ -1,10 +1,11 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
-import { ArrowRight, Zap, BookOpen, Brain, Layers } from 'lucide-react'
+import { ArrowRight, Zap, BookOpen, Brain, Layers, ExternalLink, Cpu, Target, Shield, Lightbulb } from 'lucide-react'
 import { skills } from '../data/skills'
 import { SkillCard } from '../components/SkillCard'
 import { PILLAR_COLORS } from '../types/skill'
-import { SITE } from '../utils/constants'
+import { SITE, BRAND } from '../utils/constants'
+import { ZeroOneLogo } from '../components/ZeroOneLogo'
 
 const STATS = [
   { label: 'Data Skills', count: skills.filter(s => s.pillar === 'data').length, pillar: 'data' as const, icon: Brain },
@@ -31,9 +32,16 @@ const STEPS = [
   {
     step: '03',
     title: 'Ship',
-    description: 'Production-ready output. CLAUDE.md, Docker, tests, docs — all generated automatically.',
+    description: 'Production-ready output. CLAUDE.md, Docker, tests, docs \u2014 all generated automatically.',
     code: 'npm run dev  # it just works',
   },
+]
+
+const VALUE_PROPS = [
+  { icon: Cpu, label: 'AI Consulting' },
+  { icon: Target, label: 'D.O.T.S. Framework' },
+  { icon: Lightbulb, label: 'Outcome Engines' },
+  { icon: Shield, label: 'Own Your AI' },
 ]
 
 export function Home() {
@@ -49,7 +57,7 @@ export function Home() {
           transition={{ duration: 0.6 }}
         >
           {/* D.O.T.S. letters */}
-          <div className="flex justify-center gap-3 mb-8">
+          <div className="flex justify-center gap-3 mb-4">
             {(['D', 'O', 'T', 'S'] as const).map((letter, i) => {
               const pillars = ['data', 'operations', 'tech', 'strategy'] as const
               const color = PILLAR_COLORS[pillars[i]]
@@ -67,6 +75,18 @@ export function Home() {
               )
             })}
           </div>
+
+          {/* "by ZEROONE" branding badge */}
+          <motion.p
+            className="text-sm tracking-widest text-neutral-100/30 font-mono mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            by{' '}
+            <span className="text-pillar-data/60">ZEROONE</span>
+            {' '}D&middot;O&middot;T&middot;S AI
+          </motion.p>
 
           <h1 className="font-display text-5xl sm:text-7xl text-neutral-100 mb-6">
             Claude Code Skills
@@ -169,7 +189,77 @@ export function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Built by ZeroOne — Brand Section */}
+      <section className="py-16">
+        <motion.div
+          className="relative rounded-3xl overflow-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          {/* Aurora gradient border */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-pillar-data/30 via-pillar-strategy/30 to-pillar-operations/30 p-px">
+            <div className="w-full h-full rounded-3xl bg-ink" />
+          </div>
+
+          {/* Content */}
+          <div className="relative p-10 sm:p-14 text-center">
+            {/* Logo */}
+            <div className="flex justify-center mb-6">
+              <ZeroOneLogo size={48} />
+            </div>
+
+            {/* Wordmark */}
+            <h2 className="font-mono text-lg tracking-widest text-neutral-100/80 mb-2">
+              ZEROONE
+            </h2>
+            <p className="text-sm text-neutral-100/40 font-mono tracking-wider mb-8">
+              <span className="text-pillar-data">D</span>&middot;
+              <span className="text-pillar-operations">O</span>&middot;
+              <span className="text-pillar-tech">T</span>&middot;
+              <span className="text-pillar-strategy">S</span>
+              {' '}AI
+            </p>
+
+            {/* Tagline */}
+            <p className="font-display text-2xl sm:text-3xl text-neutral-100 mb-10">
+              {BRAND.tagline}
+            </p>
+
+            {/* Value props */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+              {VALUE_PROPS.map(({ icon: Icon, label }, i) => {
+                const pillars = ['data', 'operations', 'tech', 'strategy'] as const
+                const color = PILLAR_COLORS[pillars[i]]
+                return (
+                  <div key={label} className="flex flex-col items-center gap-2">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${color}12` }}
+                    >
+                      <Icon className="w-5 h-5" style={{ color }} />
+                    </div>
+                    <span className="text-xs text-neutral-100/50 font-medium">{label}</span>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* CTA */}
+            <a
+              href={BRAND.consultingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-pillar-data/15 text-pillar-data font-semibold text-sm border border-pillar-data/20 hover:bg-pillar-data/25 transition-all cursor-pointer"
+            >
+              Learn More
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Bottom CTA — Dual buttons */}
       <section className="py-20 text-center">
         <motion.div
           className="rounded-3xl bg-gradient-to-br from-pillar-data/10 to-pillar-strategy/10 border border-white/[0.06] p-12"
@@ -181,15 +271,26 @@ export function Home() {
             Ready to supercharge your workflow?
           </h2>
           <p className="text-neutral-100/40 mb-8 max-w-xl mx-auto">
-            Install any skill in seconds. Start shipping faster today.
+            Install skills yourself, or let us build your AI.
           </p>
-          <Link
-            to="/install"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-pillar-data text-ink font-semibold text-sm hover:brightness-110 transition-all cursor-pointer"
-          >
-            Get Started
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              to="/install"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-pillar-data text-ink font-semibold text-sm hover:brightness-110 transition-all cursor-pointer"
+            >
+              Get Started
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href={BRAND.consultingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-white/5 border border-white/10 text-neutral-100 font-medium text-sm hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Work with ZeroOne
+            </a>
+          </div>
         </motion.div>
       </section>
     </div>

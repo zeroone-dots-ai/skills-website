@@ -158,6 +158,37 @@ export const skills: Skill[] = [
     videoSlug: 'skills-uiuxpromax',
     tags: ['design', 'ui', 'ux', 'styles', 'accessibility', 'components'],
   },
+
+  // ─── MCP Servers ────────────────────────────────────────────
+  {
+    id: 'plane-mcp',
+    name: 'Plane MCP Server',
+    command: 'claude mcp add plane',
+    description: 'Connect Claude Code to Plane project management — manage issues, sprints, and projects in natural language.',
+    longDescription: '20 MCP tools that wire Claude Code directly into your Plane workspace. Create issues, update states, manage sprints (cycles), modules, comments, and activities — all through natural language. No slash commands, no context switching. Just describe what you need and Claude handles the rest.',
+    category: 'mcp',
+    pillar: 'operations',
+    installCommand: `claude mcp add plane --transport http --url "https://mcp.dotsai.cloud/plane/mcp" --header "Authorization: Bearer YOUR_MCP_SECRET"`,
+    usageExamples: [
+      'List all open issues in the INSTADAILY project',
+      'Create a new issue: Build Instagram carousel scheduler — high priority, due Friday',
+      'Move issue abc-123 to Done',
+      'Show me all overdue issues across all projects',
+      'Add a comment to issue xyz: Reviewed — looks good to ship',
+    ],
+    source: 'github',
+    githubUrl: 'https://github.com/zeroone-dots-ai/projects',
+    tags: ['plane', 'project-management', 'issues', 'sprints', 'mcp', 'operations'],
+    isNew: true,
+    mcpTools: [
+      'workspace_info', 'list_projects', 'get_project',
+      'list_issues', 'get_issue', 'create_issue', 'update_issue', 'delete_issue',
+      'list_states', 'list_labels', 'list_members',
+      'list_cycles', 'get_cycle_issues', 'add_issue_to_cycle', 'remove_issue_from_cycle',
+      'list_modules', 'get_module_issues', 'add_issue_to_module',
+      'list_comments', 'add_comment', 'list_activities',
+    ],
+  },
 ]
 
 export const gsdCommands: GSDCommand[] = [

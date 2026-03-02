@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ExternalLink, Terminal, ChevronDown, ChevronUp, Copy, TerminalSquare, Zap } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Terminal, ChevronDown, ChevronUp, Copy, TerminalSquare, Zap, ArrowRight, Plug, Wrench } from 'lucide-react'
 import { useState } from 'react'
 import { skills, gsdCommands, GSD_GROUP_LABELS } from '../data/skills'
 import { PILLAR_COLORS } from '../types/skill'
@@ -8,6 +8,8 @@ import { SkillBadge } from '../components/SkillBadge'
 import { CopyButton } from '../components/CopyButton'
 import { InstallButton } from '../components/InstallButton'
 import { SkillCard } from '../components/SkillCard'
+import { ZeroOneLogo } from '../components/ZeroOneLogo'
+import { BRAND } from '../utils/constants'
 
 export function SkillDetail() {
   const { id } = useParams<{ id: string }>()
@@ -28,6 +30,7 @@ export function SkillDetail() {
   const color = PILLAR_COLORS[skill.pillar]
   const related = skills.filter(s => s.id !== skill.id && s.pillar === skill.pillar).slice(0, 3)
   const isGSD = skill.id === 'gsd-system'
+  const isMCP = skill.category === 'mcp'
   const groupedCommands = isGSD
     ? Object.entries(GSD_GROUP_LABELS).map(([group, label]) => ({
         label,
@@ -108,15 +111,21 @@ export function SkillDetail() {
           transition={{ delay: 0.1 }}
         >
           <div className="p-6">
-            <h2 className="font-display text-xl text-neutral-100 mb-6">Quick Install</h2>
+            <h2 className="font-display text-xl text-neutral-100 mb-6">
+              {isMCP ? 'Connect MCP Server' : 'Quick Install'}
+            </h2>
 
             {/* 3-step visual */}
             <div className="grid sm:grid-cols-3 gap-4 mb-6">
-              {[
+              {(isMCP ? [
+                { step: '1', icon: Copy, label: 'Copy command', desc: 'Click the button below' },
+                { step: '2', icon: TerminalSquare, label: 'Run in terminal', desc: 'Registers the MCP server' },
+                { step: '3', icon: Plug, label: '20 tools available', desc: 'Chat naturally — no slash commands' },
+              ] : [
                 { step: '1', icon: Copy, label: 'Copy command', desc: 'Click the button below' },
                 { step: '2', icon: TerminalSquare, label: 'Paste in terminal', desc: 'Open any terminal app' },
                 { step: '3', icon: Zap, label: 'Use in Claude Code', desc: `Type ${skill.command}` },
-              ].map(({ step, icon: StepIcon, label, desc }) => (
+              ]).map(({ step, icon: StepIcon, label, desc }) => (
                 <div key={step} className="flex items-start gap-3">
                   <div
                     className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold"
@@ -149,12 +158,46 @@ export function SkillDetail() {
 
             {/* After install hint */}
             <p className="text-xs text-neutral-100/30 mt-4">
-              After install, open Claude Code and type{' '}
-              <code className="px-1.5 py-0.5 rounded text-xs font-mono" style={{ backgroundColor: `${color}15`, color: `${color}90` }}>
-                {skill.command}
-              </code>
-              {' '}to start using it.
+              {isMCP
+                ? 'Replace YOUR_MCP_SECRET with your bearer token, then restart Claude Code. The MCP tools will be available in any conversation.'
+                : <>
+                    After install, open Claude Code and type{' '}
+                    <code className="px-1.5 py-0.5 rounded text-xs font-mono" style={{ backgroundColor: `${color}15`, color: `${color}90` }}>
+                      {skill.command}
+                    </code>
+                    {' '}to start using it.
+                  </>
+              }
             </p>
+          </div>
+        </motion.section>
+      )}
+
+      {/* MCP Tools grid */}
+      {isMCP && skill.mcpTools && (
+        <motion.section
+          className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          <h2 className="font-display text-xl text-neutral-100 mb-4 flex items-center gap-2">
+            <Wrench className="w-5 h-5" style={{ color }} />
+            Available Tools
+            <span className="text-sm font-sans font-normal text-neutral-100/30 ml-1">
+              {skill.mcpTools.length} total
+            </span>
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {skill.mcpTools.map(tool => (
+              <span
+                key={tool}
+                className="px-2.5 py-1 rounded-lg text-xs font-mono"
+                style={{ backgroundColor: `${color}10`, color: `${color}80`, border: `1px solid ${color}20` }}
+              >
+                {tool}
+              </span>
+            ))}
           </div>
         </motion.section>
       )}
@@ -257,7 +300,7 @@ export function SkillDetail() {
 
       {/* Related */}
       {related.length > 0 && (
-        <section className="pb-16">
+        <section className="pb-8">
           <h2 className="font-display text-xl text-neutral-100 mb-6">Related Skills</h2>
           <div className="grid sm:grid-cols-3 gap-4">
             {related.map((s, i) => (
@@ -266,6 +309,37 @@ export function SkillDetail() {
           </div>
         </section>
       )}
+
+      {/* Consulting CTA */}
+      <motion.section
+        className="pb-16"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="rounded-2xl bg-gradient-to-br from-ink to-[#2a1f3d] border border-white/[0.08] p-8 sm:p-10">
+          <div className="flex items-start gap-4 mb-4">
+            <ZeroOneLogo size={36} />
+            <div>
+              <h3 className="font-display text-xl text-neutral-100 mb-2">
+                Need help implementing at scale?
+              </h3>
+              <p className="text-sm text-neutral-100/40 leading-relaxed max-w-lg">
+                ZeroOne builds custom AI solutions powered by the D.O.T.S. framework. From strategy to deployment, we help teams ship AI products 10x faster.
+              </p>
+            </div>
+          </div>
+          <a
+            href={BRAND.consultingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 px-6 py-2.5 rounded-xl text-sm font-medium bg-pillar-data/15 text-pillar-data border border-pillar-data/20 hover:bg-pillar-data/25 transition-all cursor-pointer"
+          >
+            Book a Consultation
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </motion.section>
     </div>
   )
 }

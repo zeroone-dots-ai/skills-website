@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Download, Check, Terminal, GitBranch, Sparkles } from 'lucide-react'
+import { Download, Check, Terminal, GitBranch, Sparkles, Plug } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Skill } from '../types/skill'
 import { PILLAR_COLORS } from '../types/skill'
@@ -47,7 +47,8 @@ export function InstallButton({ skill, size = 'md', showCommand = false }: Insta
   }
 
   const isGitClone = skill.installCommand.startsWith('git clone')
-  const Icon = isGitClone ? GitBranch : Download
+  const isMcpAdd = skill.installCommand.startsWith('claude mcp add')
+  const Icon = isMcpAdd ? Plug : isGitClone ? GitBranch : Download
 
   return (
     <div className={showCommand ? 'space-y-2' : ''}>
@@ -86,7 +87,7 @@ export function InstallButton({ skill, size = 'md', showCommand = false }: Insta
               exit={{ opacity: 0, y: -4 }}
             >
               <Icon className={size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />
-              {isGitClone ? 'Clone to Install' : 'Install via Terminal'}
+              {isMcpAdd ? 'Connect MCP Server' : isGitClone ? 'Clone to Install' : 'Install via Terminal'}
             </motion.span>
           )}
         </AnimatePresence>
