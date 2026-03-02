@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ExternalLink, Terminal, ChevronDown, ChevronUp, Copy, TerminalSquare, Zap, ArrowRight, Plug, Wrench } from 'lucide-react'
 import { useState } from 'react'
-import { skills, gsdCommands, GSD_GROUP_LABELS } from '../data/skills'
+import { skills, gsdCommands, GSD_GROUP_LABELS, meetPlaneCommands, MEET_PLANE_GROUP_LABELS } from '../data/skills'
 import { PILLAR_COLORS } from '../types/skill'
 import { SkillBadge } from '../components/SkillBadge'
 import { CopyButton } from '../components/CopyButton'
@@ -30,11 +30,17 @@ export function SkillDetail() {
   const color = PILLAR_COLORS[skill.pillar]
   const related = skills.filter(s => s.id !== skill.id && s.pillar === skill.pillar).slice(0, 3)
   const isGSD = skill.id === 'gsd-system'
+  const isMeetPlane = skill.id === 'meet-plane-system'
   const isMCP = skill.category === 'mcp'
   const groupedCommands = isGSD
     ? Object.entries(GSD_GROUP_LABELS).map(([group, label]) => ({
         label,
         commands: gsdCommands.filter(c => c.group === group),
+      }))
+    : isMeetPlane
+    ? Object.entries(MEET_PLANE_GROUP_LABELS).map(([group, label]) => ({
+        label,
+        commands: meetPlaneCommands.filter(c => c.group === group),
       }))
     : []
 
@@ -228,8 +234,8 @@ export function SkillDetail() {
         </div>
       </motion.section>
 
-      {/* GSD Commands List */}
-      {isGSD && (
+      {/* GSD / Meet:Plane Commands List */}
+      {(isGSD || isMeetPlane) && (
         <motion.section
           className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6 mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -238,7 +244,7 @@ export function SkillDetail() {
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-display text-xl text-neutral-100">
-              All 28 Commands
+              All {isGSD ? '28' : '24'} Commands
             </h2>
             <button
               onClick={() => setShowAllCommands(!showAllCommands)}
@@ -261,7 +267,7 @@ export function SkillDetail() {
                       key={cmd.command}
                       className="flex items-center gap-4 px-4 py-2.5 rounded-lg bg-ink/50 border border-white/[0.04]"
                     >
-                      <code className="text-xs text-pillar-operations font-mono shrink-0 w-52">
+                      <code className={`text-xs text-pillar-operations font-mono shrink-0 ${isMeetPlane ? 'w-60' : 'w-52'}`}>
                         {cmd.command}
                       </code>
                       <span className="text-xs text-neutral-100/40">

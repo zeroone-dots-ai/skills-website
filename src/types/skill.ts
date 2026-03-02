@@ -27,6 +27,12 @@ export interface GSDCommand {
   group: 'init' | 'plan' | 'execute' | 'manage' | 'system'
 }
 
+export interface MeetPlaneCommand {
+  command: string
+  description: string
+  group: 'nav' | 'task' | 'sprint' | 'ecosystem' | 'review'
+}
+
 export const PILLAR_COLORS: Record<PillarKey, string> = {
   data: '#C8B6FF',
   operations: '#B8E0D2',

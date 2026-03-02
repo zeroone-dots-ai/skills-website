@@ -1,4 +1,4 @@
-import type { Skill, GSDCommand } from '../types/skill'
+import type { Skill, GSDCommand, MeetPlaneCommand } from '../types/skill'
 
 export const skills: Skill[] = [
   // ─── Personal Skills ────────────────────────────────────────
@@ -159,13 +159,36 @@ export const skills: Skill[] = [
     tags: ['design', 'ui', 'ux', 'styles', 'accessibility', 'components'],
   },
 
+  // ─── Project Skills ─────────────────────────────────────────
+  {
+    id: 'meet-plane-system',
+    name: 'Meet:Plane System',
+    command: '/Meet:Plane',
+    description: '24 slash commands for full Plane project management — tasks, sprints, PRDs, research, blockers, and docs.',
+    longDescription: 'A complete project management command system built on top of the Plane MCP server. 24 slash commands cover everything: create and manage tasks, run daily standups, plan sprints, write PRDs that auto-create subtasks, attach research to issues, link documents from Docmost or GitHub, and build dependency chains with blocker relationships. Pairs with the Plane MCP for zero-friction project control from any Claude conversation.',
+    category: 'project',
+    pillar: 'operations',
+    installCommand: 'bash <(curl -s https://raw.githubusercontent.com/zeroone-dots-ai/projects/main/skills/plane/install.sh)',
+    usageExamples: [
+      '/Meet:Plane',
+      '/Meet:PlaneCapture saas fix the stripe webhook — high priority',
+      '/Meet:PlaneDaily',
+      '/Meet:PlanePRD [project] user authentication system',
+      '/Meet:PlaneLink PRJ-42 blocks PRJ-48',
+    ],
+    source: 'github',
+    githubUrl: 'https://github.com/zeroone-dots-ai/projects',
+    tags: ['plane', 'project-management', 'prd', 'sprints', 'blockers', 'research', 'tasks'],
+    isNew: true,
+  },
+
   // ─── MCP Servers ────────────────────────────────────────────
   {
     id: 'plane-mcp',
     name: 'Plane MCP Server',
     command: 'claude mcp add plane',
-    description: 'Connect Claude Code to Plane project management — manage issues, sprints, and projects in natural language.',
-    longDescription: '20 MCP tools that wire Claude Code directly into your Plane workspace. Create issues, update states, manage sprints (cycles), modules, comments, and activities — all through natural language. No slash commands, no context switching. Just describe what you need and Claude handles the rest.',
+    description: 'Connect Claude Code to Plane project management — 24 tools for issues, sprints, modules, relations, and more.',
+    longDescription: '24 MCP tools that wire Claude Code directly into your Plane workspace. Create issues, update states, manage sprints (cycles), modules, comments, activities, and issue relations (blockers, dependencies). All through natural language — no slash commands, no context switching. Pairs with the Meet:Plane skill system for the full experience.',
     category: 'mcp',
     pillar: 'operations',
     installCommand: `claude mcp add plane --transport http --url "https://mcp.dotsai.cloud/plane/mcp" --header "Authorization: Bearer YOUR_MCP_SECRET"`,
@@ -174,11 +197,11 @@ export const skills: Skill[] = [
       'Create a new issue: Build Instagram carousel scheduler — high priority, due Friday',
       'Move issue abc-123 to Done',
       'Show me all overdue issues across all projects',
-      'Add a comment to issue xyz: Reviewed — looks good to ship',
+      'Link PRJ-42 as a blocker of PRJ-48',
     ],
     source: 'github',
     githubUrl: 'https://github.com/zeroone-dots-ai/projects',
-    tags: ['plane', 'project-management', 'issues', 'sprints', 'mcp', 'operations'],
+    tags: ['plane', 'project-management', 'issues', 'sprints', 'blockers', 'mcp', 'operations'],
     isNew: true,
     mcpTools: [
       'workspace_info', 'list_projects', 'get_project',
@@ -186,6 +209,7 @@ export const skills: Skill[] = [
       'list_states', 'list_labels', 'list_members',
       'list_cycles', 'get_cycle_issues', 'add_issue_to_cycle', 'remove_issue_from_cycle',
       'list_modules', 'get_module_issues', 'add_issue_to_module',
+      'list_issue_relations', 'add_issue_relation', 'remove_issue_relation',
       'list_comments', 'add_comment', 'list_activities',
     ],
   },
@@ -234,4 +258,44 @@ export const GSD_GROUP_LABELS: Record<GSDCommand['group'], string> = {
   execute: 'Execution',
   manage: 'Management',
   system: 'System',
+}
+
+export const meetPlaneCommands: MeetPlaneCommand[] = [
+  // Navigation
+  { command: '/Meet:Plane', description: 'Mission control — all projects, counts by state, full command list', group: 'nav' },
+  { command: '/Meet:PlaneList', description: 'List & filter issues by state, priority, sprint, module, or search', group: 'nav' },
+  { command: '/Meet:PlaneView', description: 'Full issue details — description, subtasks, comments, links, history', group: 'nav' },
+  // Task Management
+  { command: '/Meet:PlaneAdd', description: 'Create issue with all fields in natural language', group: 'task' },
+  { command: '/Meet:PlaneCapture', description: 'Zero-friction brain dump → issue in 3 seconds', group: 'task' },
+  { command: '/Meet:PlaneUpdate', description: 'Update any field — title, state, priority, date, assignee', group: 'task' },
+  { command: '/Meet:PlaneMove', description: 'Fast state transition — understands "wip", "close", "drop"', group: 'task' },
+  { command: '/Meet:PlaneClose', description: 'Mark one or many issues as Done in one command', group: 'task' },
+  { command: '/Meet:PlaneSubtask', description: 'Add subtasks under a parent — build full task trees', group: 'task' },
+  { command: '/Meet:PlaneComment', description: 'Add comment with auto-formatting (BLOCKED, DECISION, NOTE)', group: 'task' },
+  { command: '/Meet:PlaneLog', description: 'Full activity history — every state change, assignment, comment', group: 'task' },
+  { command: '/Meet:PlaneDelete', description: 'Safe delete with confirmation prompt', group: 'task' },
+  // Sprint & Planning
+  { command: '/Meet:PlaneSprint', description: 'Sprint board — view current cycle, add/remove issues', group: 'sprint' },
+  { command: '/Meet:PlanePlan', description: 'Interactive sprint planning — move backlog into sprint', group: 'sprint' },
+  { command: '/Meet:PlaneModule', description: 'Module / epic management with completion progress', group: 'sprint' },
+  { command: '/Meet:PlanePrioritize', description: 'AI-assisted backlog triage — classify priority fast', group: 'sprint' },
+  { command: '/Meet:PlaneBulk', description: 'Bulk update many issues at once — state, priority, sprint', group: 'sprint' },
+  // Reviews
+  { command: '/Meet:PlaneDaily', description: 'Morning standup — urgent, in progress, overdue, due this week', group: 'review' },
+  { command: '/Meet:PlaneWeekly', description: 'Weekly review — what shipped, velocity, next week plan', group: 'review' },
+  // Docs & Ecosystem
+  { command: '/Meet:PlanePRD', description: 'Write full PRD → attach to issue → auto-create subtasks', group: 'ecosystem' },
+  { command: '/Meet:PlaneChecklist', description: 'Add launch / deploy / QA checklist to any issue', group: 'ecosystem' },
+  { command: '/Meet:PlaneResearch', description: 'Claude researches topic → findings attached to issue', group: 'ecosystem' },
+  { command: '/Meet:PlaneDoc', description: 'Link Docmost pages, GitHub files, or any URL to an issue', group: 'ecosystem' },
+  { command: '/Meet:PlaneLink', description: 'Build blocker / dependency chains between issues', group: 'ecosystem' },
+]
+
+export const MEET_PLANE_GROUP_LABELS: Record<MeetPlaneCommand['group'], string> = {
+  nav: 'Navigation',
+  task: 'Task Management',
+  sprint: 'Sprint & Planning',
+  review: 'Reviews',
+  ecosystem: 'Docs & Ecosystem',
 }
