@@ -1,4 +1,4 @@
-export type SkillCategory = 'personal' | 'gsd' | 'project' | 'community' | 'design' | 'mcp'
+export type SkillCategory = 'personal' | 'gsd' | 'project' | 'community' | 'design' | 'mcp' | 'plugin'
 
 export type PillarKey = 'data' | 'operations' | 'tech' | 'strategy'
 
@@ -47,4 +47,5 @@ export const CATEGORY_LABELS: Record<SkillCategory, string> = {
   community: 'Community',
   design: 'Design',
   mcp: 'MCP Server',
+  plugin: 'Plugin',
 }
